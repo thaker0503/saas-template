@@ -1,0 +1,38 @@
+# Dependencies
+/node_modules
+**/node_modules
+
+# Build outputs
+/dist
+/build
+/apps/web/.next
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Prisma
+/apps/api/prisma/generated
+
+# VSCode
+.vscode/
+
+# Coverage
+coverage
+
+# Turborepo
+.turbo
+
+# Storybook
+storybook-static
+
+# Husky
+.husky/_

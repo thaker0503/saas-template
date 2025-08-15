@@ -1,0 +1,23 @@
+{
+	"extends": "../../packages/config/tsconfig/tsconfig.next.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./*"],
+			"@acme/config/*": ["../../packages/config/src/*"],
+			"@acme/env": ["../../packages/env/src/index.ts"],
+			"@acme/env/*": ["../../packages/env/src/*"],
+			"@acme/tenancy": ["../../packages/tenancy/src/index.ts"],
+			"@acme/feature-flags": ["../../packages/feature-flags/src/index.ts"],
+			"@acme/rbac": ["../../packages/rbac/src/index.ts"],
+			"@acme/ui": ["../../packages/ui/src/index.ts"]
+		}
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules"]
+}
