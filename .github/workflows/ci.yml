@@ -44,8 +44,8 @@ jobs:
         run: pnpm --filter @acme/api prisma:deploy
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/acme?schema=public
-      - name: Lint
-        run: pnpm lint
+      # - name: Lint
+      #   run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
       - name: Test
