@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@acme/config/*": ["packages/config/src/*"],
+      "@acme/env": ["packages/env/src/index.ts"],
+      "@acme/env/*": ["packages/env/src/*"],
+      "@acme/tenancy": ["packages/tenancy/src/index.ts"],
+      "@acme/tenancy/*": ["packages/tenancy/src/*"],
+      "@acme/feature-flags": ["packages/feature-flags/src/index.ts"],
+      "@acme/feature-flags/*": ["packages/feature-flags/src/*"],
+      "@acme/rbac": ["packages/rbac/src/index.ts"],
+      "@acme/rbac/*": ["packages/rbac/src/*"],
+      "@acme/ui": ["packages/ui/src/index.ts"],
+      "@acme/ui/*": ["packages/ui/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "build"]
+}

@@ -1,0 +1,80 @@
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+	provider = "postgresql"
+	url      = env("DATABASE_URL")
+}
+
+model Tenant {
+	id        String   @id @default(cuid())
+	slug      String   @unique
+	name      String
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+	organizations Organization[]
+	featureFlags FeatureFlag[]
+}
+
+model FeatureFlag {
+	id        String   @id @default(cuid())
+	key       String
+	enabled   Boolean  @default(false)
+	variant   String?
+	tenantId  String
+	tenant    Tenant   @relation(fields: [tenantId], references: [id])
+	@@unique([key, tenantId])
+}
+
+model User {
+	id        String   @id @default(cuid())
+	email     String   @unique
+	name      String?
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+	memberships Membership[]
+}
+
+model Organization {
+	id        String   @id @default(cuid())
+	name      String
+	tenantId  String
+	tenant    Tenant   @relation(fields: [tenantId], references: [id])
+	members   Membership[]
+	subscription Subscription?
+}
+
+enum Role {
+	OWNER
+	ADMIN
+	MEMBER
+	VIEWER
+}
+
+model Membership {
+	id             String        @id @default(cuid())
+	userId         String
+	organizationId String
+	role           Role
+	user           User          @relation(fields: [userId], references: [id])
+	organization   Organization  @relation(fields: [organizationId], references: [id])
+	@@unique([userId, organizationId])
+}
+
+model Plan {
+	id        String   @id @default(cuid())
+	name      String
+	key       String   @unique
+	priceCents Int
+	subscriptions Subscription[]
+}
+
+model Subscription {
+	id             String   @id @default(cuid())
+	organizationId String   @unique
+	planId         String
+	active         Boolean  @default(true)
+	organization   Organization @relation(fields: [organizationId], references: [id])
+	plan           Plan         @relation(fields: [planId], references: [id])
+}
