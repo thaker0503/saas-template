@@ -29,7 +29,7 @@ Apps:
 - Marketing: `web/app/(marketing)` → `/`, `/pricing`, `/blog`
 - Auth: `web/app/(auth)/auth/*` → sign-in scaffolding
 - Dashboard: `web/app/(dashboard)/app/*`
-- Nav visibility is driven by role and feature flags (helpers in `@acme/rbac`, `@acme/feature-flags`).
+- Nav (`apps/web/components/Nav.tsx`) shows/hides items by role and feature flags using `usePermission` and the flags SDK.
 
 ## Feature Flags
 
@@ -49,12 +49,12 @@ const enabled = await client.isEnabled('invoices.v2')
 
 - Models: `User`, `Organization`, `Membership(Role)`, `Tenant`, `Plan`, `Subscription`
 - BE `RbacGuard` maps action→min role
-- FE hooks to implement: `useRole()`, `usePermission(action)` can wrap `@acme/rbac` helpers
+- FE hooks in `apps/web/lib/auth.ts`: `useRole()`, `usePermission(action)` wrap `@acme/rbac` helpers
 
 ## Auth
 
-- NextAuth route is scaffolded for email and passkeys. Session can include `tenantId`, `orgId`, `role`.
-- Nest JWT strategy reads tenant claim.
+- NextAuth route is scaffolded (email provider). Session extension placeholders exist; add providers and email delivery to enable.
+- Nest JWT strategy reads tenant claim; `POST /api/auth/dev` issues a dev JWT for demo.
 
 ## DX
 
@@ -64,6 +64,10 @@ const enabled = await client.isEnabled('invoices.v2')
 - Vitest for packages, Jest for Nest
 - CI GitHub Actions: install/cache, lint, test, typecheck, build, prisma migrate (preview)
 - Docker compose for Postgres 16 + Redis 7
+
+## Rate Limiting (example)
+
+- `RateLimitModule` provides a Redis-based `RateLimitGuard` (120 req/min per IP). Enabled automatically when `REDIS_URL` is set.
 
 ## Env toggles
 

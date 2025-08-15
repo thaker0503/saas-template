@@ -8,18 +8,23 @@ import { TenancyModule } from './tenancy/tenancy.module';
 import { FlagsModule } from './flags/flags.module';
 import { RbacModule } from './rbac/rbac.module';
 import { UsersModule } from './users/users.module';
+import { RateLimitModule } from './ratelimit/ratelimit.module';
+
+const modules = [
+	ConfigModule.forRoot({ isGlobal: true }),
+	EnvModule,
+	PrismaModule,
+	TenancyModule,
+	AuthModule,
+	FlagsModule,
+	RbacModule,
+	UsersModule,
+];
+
+if (process.env.REDIS_URL) modules.push(RateLimitModule);
 
 @Module({
-	imports: [
-		ConfigModule.forRoot({ isGlobal: true }),
-		EnvModule,
-		PrismaModule,
-		TenancyModule,
-		AuthModule,
-		FlagsModule,
-		RbacModule,
-		UsersModule,
-	],
+	imports: modules,
 	controllers: [HealthController],
 })
 export class AppModule {}
